@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">BeerVPNAndro</string>
+    <string name="connect">Connect</string>
+    <string name="connecting">Connecting…</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="connected">Connected</string>
+    <string name="disconnect">Disconnect</string>
+</resources>
