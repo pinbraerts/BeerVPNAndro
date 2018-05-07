@@ -65,21 +65,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun startConnecting() {
         connectThread = Thread(connectThreadRunnable)
         connectThread.start()
-        TODO("start VPN service and call finishConnecting when connected")
+        //TODO("start VPN service and call finishConnecting when connected")
     }
     public fun finishConnecting() {
         runOnUiThread {
             state = State.Connected
             Toast.makeText(this, "connected!", Toast.LENGTH_SHORT).show()
         }
-        TODO()
+        //TODO()
     }
     private fun disconnect() {
         runOnUiThread {
             Toast.makeText(this, "disconnected!", Toast.LENGTH_SHORT).show()
         }
         connectThread.interrupt()
-        TODO("stop service if running")
+        //TODO("stop service if running")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
