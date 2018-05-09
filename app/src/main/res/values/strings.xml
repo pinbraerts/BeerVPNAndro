@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">BeerVPNAndro</string>
+    <string name="app_name" translatable="false">BeerVPNAndro</string>
     <string name="connect">Connect</string>
     <string name="connecting"><font color="yellow">Connecting to VPN…</font></string>
     <string name="disconnected"><font color="red">VPN Disconnected</font></string>
     <string name="connected"><font color="green">VPN Connected</font></string>
     <string name="disconnect">Disconnect</string>
+    <string name="feedback">Feedback</string>
 </resources>

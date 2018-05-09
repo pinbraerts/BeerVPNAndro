@@ -1,5 +1,6 @@
 package com.beervpn.beervpnandro
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -27,7 +28,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 }
                 MainActivity.State.Connecting -> {
                     txt.setText(R.string.connecting)
-                    btn.setText(R.string.disconnect)
+                    btn.setText(android.R.string.cancel)
                     prb.visibility = View.VISIBLE
                 }
                 MainActivity.State.Disconnected -> {
@@ -91,5 +92,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         txt = findViewById(R.id.lbl_connection)
         prb = findViewById(R.id.prb_connection)
+
+        findViewById<Button>(R.id.btn_feedback).setOnClickListener {
+            startActivity(Intent(this, FeedbackActivity::class.java))
+        }
     }
 }
