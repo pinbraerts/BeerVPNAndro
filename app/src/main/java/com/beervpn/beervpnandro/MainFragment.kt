@@ -53,15 +53,17 @@ class MainFragment : android.support.v4.app.Fragment() {
     private fun startConnecting() {
         connectThread = Thread(connectThreadRunnable)
         connectThread.start()
-        //TODO("start VPN service and call finishConnecting when connected")
+        TODO("start VPN service and call finishConnecting when connected")
     }
-
-    fun finishConnecting() {
-        //TODO()
+    public fun finishConnecting() {
+        (context as MainActivity).runOnUiThread {
+            state = State.Connected
+        }
+        TODO()
     }
     private fun disconnect() {
         connectThread.interrupt()
-        //TODO("stop service if running")
+        TODO("stop service if running")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

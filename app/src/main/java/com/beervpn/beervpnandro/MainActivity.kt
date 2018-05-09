@@ -1,15 +1,14 @@
 package com.beervpn.beervpnandro
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
-import android.support.v4.view.GravityCompat
-
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var drawerLayout: DrawerLayout
@@ -54,10 +53,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         val toolbar = findViewById<Toolbar>(R.id.nav_toolbar)
         setSupportActionBar(toolbar)
-        supportActionBar?.apply {
-            setHomeAsUpIndicator(R.drawable.ic_menu)
-            setDisplayHomeAsUpEnabled(true)
-        }
 
         drawerLayout = findViewById<DrawerLayout>(R.id.nav_drawer)
         val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,
