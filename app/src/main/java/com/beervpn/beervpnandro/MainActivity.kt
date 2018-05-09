@@ -3,98 +3,68 @@ package com.beervpn.beervpnandro
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.support.design.widget.NavigationView
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.widget.Toolbar
+import android.view.MenuItem
+import android.support.v4.view.GravityCompat
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
-    enum class State {
-        Connected,
-        Connecting,
-        Disconnected
-    }
 
-    private var state = State.Disconnected
-        set(s) {
-            if(field == s) return
-            field = s
-            when(field) {
-                MainActivity.State.Connected -> {
-                    txt.setText(R.string.connected)
-                    btn.setText(R.string.disconnect)
-                    prb.visibility = View.GONE
-                }
-                MainActivity.State.Connecting -> {
-                    txt.setText(R.string.connecting)
-                    btn.setText(android.R.string.cancel)
-                    prb.visibility = View.VISIBLE
-                }
-                MainActivity.State.Disconnected -> {
-                    txt.setText(R.string.disconnected)
-                    btn.setText(R.string.connect)
-                    prb.visibility = View.GONE
-                }
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    lateinit var drawerLayout: DrawerLayout
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.item_about -> {
+                TODO("replace @id/frag with About fragment")
+            }
+            R.id.item_feedback ->
+                startActivity(Intent(this, FeedbackActivity::class.java))
+            R.id.item_ownvpn -> {
+                TODO("replace @id/frag with New VPN fragment")
+            }
+            R.id.item_faq -> {
+                TODO("replace @id/frag with FAQ fragment")
+            }
+            R.id.item_privacy -> {
+                TODO("replace @id/frag with Privacy Policy fragment")
+            }
+            R.id.item_report -> {
+                TODO("replace @id/frag with Report fragment")
             }
         }
-
-    private lateinit var btn: Button
-    private lateinit var txt: TextView
-    private lateinit var prb: ProgressBar
-    private val connectThreadRunnable = Runnable {
-        try {
-            Thread.sleep(1000)
-            finishConnecting()
-        } catch (e: InterruptedException) {}
+        drawerLayout.closeDrawers()
+        return true
     }
-    private var connectThread = Thread(connectThreadRunnable)
 
-    override fun onClick(v: View) {
-        state = when(state) {
-            State.Connected, State.Connecting -> {
-                disconnect()
-                State.Disconnected
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                drawerLayout.openDrawer(GravityCompat.START)  // OPEN DRAWER
+                true
             }
-            State.Disconnected -> {
-                startConnecting()
-                State.Connecting
-            }
+            else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun startConnecting() {
-        connectThread = Thread(connectThreadRunnable)
-        connectThread.start()
-        //TODO("start VPN service and call finishConnecting when connected")
-    }
-    public fun finishConnecting() {
-        runOnUiThread {
-            state = State.Connected
-            Toast.makeText(this, "connected!", Toast.LENGTH_SHORT).show()
-        }
-        //TODO()
-    }
-    private fun disconnect() {
-        runOnUiThread {
-            Toast.makeText(this, "disconnected!", Toast.LENGTH_SHORT).show()
-        }
-        connectThread.interrupt()
-        //TODO("stop service if running")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btn = findViewById(R.id.btn_connect)
-        btn.setOnClickListener(this)
-
-        txt = findViewById(R.id.lbl_connection)
-        prb = findViewById(R.id.prb_connection)
-
-        findViewById<Button>(R.id.btn_feedback).setOnClickListener {
-            startActivity(Intent(this, FeedbackActivity::class.java))
+        val toolbar = findViewById<Toolbar>(R.id.nav_toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.apply {
+            setHomeAsUpIndicator(R.drawable.ic_menu)
+            setDisplayHomeAsUpEnabled(true)
         }
+
+        drawerLayout = findViewById<DrawerLayout>(R.id.nav_drawer)
+        val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.nav_drawer_open, R.string.nav_drawer_close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        findViewById<NavigationView>(R.id.nav_view).setNavigationItemSelectedListener(this)
     }
 }

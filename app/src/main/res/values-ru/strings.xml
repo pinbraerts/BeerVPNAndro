@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="open_own_vpn">Открыть свой VPN</string>
+    <string name="feedback">Купить пиво</string>
+    <string name="connect">Сделать хорошо</string>
+    <string name="disconnect">Вернуть как было</string>
+    <string name="about">Про нас</string>
+    <string name="privacy_policy">Политика конфиденциальности</string>
+    <string name="report">Сообщить о проблеме</string>
+</resources>
