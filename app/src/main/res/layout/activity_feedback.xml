@@ -55,9 +55,9 @@
 
     <Button
         android:id="@+id/button"
+        style="@style/BigButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Buy!"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+        android:text="Buy!" />
 
 </LinearLayout>

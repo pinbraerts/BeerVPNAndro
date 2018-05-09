@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="BigButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textSize">24sp</item>
+        <item name="android:padding">20dp</item>
+    </style>
+
 </resources>
