@@ -10,6 +10,7 @@
     <ImageView
         android:layout_width="64dp"
         android:layout_height="64dp"
+        android:contentDescription="@string/beer_pint"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/beer_pint" />
 
