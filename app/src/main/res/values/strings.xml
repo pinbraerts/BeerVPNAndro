@@ -13,6 +13,10 @@
     <string name="report">Report a problem</string>
     <string name="nav_drawer_open" translatable="false">Open</string>
     <string name="nav_drawer_close" translatable="false">Close</string>
-    <string name="beer_pint">beer pint</string>
-    <string name="pint_cost">= 100₽</string>
+    <string name="beer_pint" translatable="false">beer pint</string>
+    <string name="pint_cost" translatable="false">= 100₽</string>
+    <string name="beer_for_beervpn">Beer for BeerVPN</string>
+    <string name="beer_for_the_admin">Beer for the Admin</string>
+    <string name="buy">Buy!</string>
+    <string name="ruble" translatable="false">₽</string>
 </resources>
