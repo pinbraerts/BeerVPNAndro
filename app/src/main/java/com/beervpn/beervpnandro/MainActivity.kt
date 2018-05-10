@@ -1,6 +1,5 @@
 package com.beervpn.beervpnandro
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -19,7 +18,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 TODO("replace @id/frag with About fragment")
             }
             R.id.item_feedback ->
-                startActivity(Intent(this, FeedbackActivity::class.java))
+                supportFragmentManager.beginTransaction()
+                        .replace(R.id.frag, FeedbackFragment())
+                        .commit()
             R.id.item_ownvpn -> {
                 TODO("replace @id/frag with New VPN fragment")
             }
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                drawerLayout.openDrawer(GravityCompat.START)  // OPEN DRAWER
+                drawerLayout.openDrawer(GravityCompat.START)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -54,12 +55,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val toolbar = findViewById<Toolbar>(R.id.nav_toolbar)
         setSupportActionBar(toolbar)
 
-        drawerLayout = findViewById<DrawerLayout>(R.id.nav_drawer)
+        drawerLayout = findViewById(R.id.nav_drawer)
         val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.nav_drawer_open, R.string.nav_drawer_close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
         findViewById<NavigationView>(R.id.nav_view).setNavigationItemSelectedListener(this)
+
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.frag, MainFragment())
+                .commitNow()
     }
 }

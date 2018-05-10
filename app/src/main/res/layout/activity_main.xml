@@ -21,12 +21,10 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme" />
 
-        <fragment
+        <FrameLayout
             android:id="@+id/frag"
-            android:name="com.beervpn.beervpnandro.MainFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout="@layout/fragment_main" />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

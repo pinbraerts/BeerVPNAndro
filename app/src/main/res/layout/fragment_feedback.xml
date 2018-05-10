@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FeedbackActivity">
+    tools:context=".FeedbackFragment">
 
     <TextView
         android:layout_width="wrap_content"
@@ -69,14 +69,12 @@
             android:thumb="@drawable/ic_beer" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_gravity="bottom"
         android:gravity="center"
-        android:orientation="horizontal"
         android:padding="16dp"
         android:layout_alignParentLeft="true">
 
@@ -84,23 +82,38 @@
             android:id="@+id/text_summary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2"
             tools:text="300" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/text_summary"
             android:text="@string/ruble"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:layout_toRightOf="@+id/text_summary" />
+
+        <Space
+            android:id="@+id/_space_center"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true" />
 
         <Button
             android:id="@+id/btn_buy"
             style="@style/BigButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/buy" />
-    </LinearLayout>
+            android:layout_alignStart="@id/_space_center"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:text="@string/buy"
+            android:layout_alignParentRight="true"
+            android:layout_alignLeft="@id/_space_center" />
+    </RelativeLayout>
 
 </RelativeLayout>

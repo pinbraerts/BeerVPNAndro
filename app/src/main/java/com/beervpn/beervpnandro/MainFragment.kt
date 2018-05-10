@@ -1,6 +1,5 @@
 package com.beervpn.beervpnandro
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -86,7 +85,9 @@ class MainFragment : android.support.v4.app.Fragment() {
             prb = findViewById(R.id.prb_connection)
 
             findViewById<Button>(R.id.btn_feedback).setOnClickListener {
-                startActivity(Intent(context, FeedbackActivity::class.java))
+                (context as MainActivity).supportFragmentManager.beginTransaction()
+                        .replace(R.id.frag, FeedbackFragment())
+                        .commit()
             }
         }
     }

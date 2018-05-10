@@ -13,7 +13,6 @@ android {
         versionCode 1
         versionName "v0.0.1"
         resValue "string", "version_name", versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
