@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/side_nav_bar"
-    android:padding="16dp">
+    android:padding="@dimen/small_padding">
 
     <ImageView
-        android:layout_width="64dp"
-        android:layout_height="64dp"
+        android:layout_width="@dimen/huge_width"
+        android:layout_height="@dimen/huge_width"
         android:contentDescription="@string/beer_pint"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/beer_pint" />
