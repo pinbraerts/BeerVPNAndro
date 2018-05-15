@@ -12,6 +12,8 @@ import android.widget.SeekBar
 import android.widget.TextView
 
 class FeedbackFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
+    companion object: BeerCompanion(1, "BEER", ::FeedbackFragment)
+
     lateinit var summaryText: TextView
     lateinit var buttonBuy: Button
 
@@ -40,6 +42,12 @@ class FeedbackFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
         }
     }
 
+    fun getDrawableOver(id: Int): Drawable {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            context!!.getDrawable(id)
+        else resources.getDrawable(id)
+    }
+
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
         if(fromUser) {
             seekBar.getPreviousProgress().let {
@@ -53,12 +61,6 @@ class FeedbackFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
 
     override fun onStartTrackingTouch(seekBar: SeekBar) { } // do not use
     override fun onStopTrackingTouch(seekBar: SeekBar) { } // do not use
-
-    fun getDrawableOver(id: Int): Drawable {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                context!!.getDrawable(id)
-            else resources.getDrawable(id)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_feedback, container, false).also {

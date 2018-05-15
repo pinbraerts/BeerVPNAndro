@@ -1,6 +1,7 @@
 package com.beervpn.beervpnandro
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,9 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 
-class MainFragment : android.support.v4.app.Fragment() {
+class MainFragment: Fragment() {
+    companion object : BeerCompanion(0, "MAIN", ::MainFragment)
+
     enum class State {
         Connected,
         Connecting,
@@ -85,10 +88,7 @@ class MainFragment : android.support.v4.app.Fragment() {
             prb = findViewById(R.id.prb_connection)
 
             findViewById<Button>(R.id.btn_feedback).setOnClickListener {
-                (context as MainActivity).replaceFragment(
-                        R.string.feedback,
-                        ::FeedbackFragment
-                )
+                (context as MainActivity).replaceFragment(FeedbackFragment)
             }
         }
     }

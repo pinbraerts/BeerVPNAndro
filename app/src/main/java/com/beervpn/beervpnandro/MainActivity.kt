@@ -2,7 +2,6 @@ package com.beervpn.beervpnandro
 
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -13,20 +12,21 @@ import android.view.MenuItem
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var drawerLayout: DrawerLayout
 
-    inline fun replaceFragment(tagId: Int, fragmentFactory: () -> Fragment) {
-        val tag = getString(tagId)
+    fun replaceFragment(comp: BeerCompanion) {
         drawerLayout.closeDrawers()
-        if(supportFragmentManager.findFragmentByTag(tag)?.isVisible != true)
-            supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(
-                            android.R.animator.fade_in,
-                            android.R.animator.fade_out,
-                            android.R.animator.fade_in,
-                            android.R.animator.fade_out
-                    )
-                    .replace(R.id.frag, fragmentFactory(), tag)
-                    .addToBackStack(tag)
-                    .commit()
+        supportFragmentManager.apply {
+            if (findFragmentByTag(comp.tag)?.isVisible != true)
+                beginTransaction()
+                        .setCustomAnimations(
+                                android.R.animator.fade_in,
+                                android.R.animator.fade_out,
+                                android.R.animator.fade_in,
+                                android.R.animator.fade_out
+                        )
+                        .replace(R.id.frag, comp.instance, comp.tag)
+                        .addToBackStack(comp.tag)
+                        .commit()
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 TODO("replace @id/frag with About fragment")
             }
             R.id.item_feedback ->
-                replaceFragment(R.string.feedback, ::FeedbackFragment)
+                replaceFragment(FeedbackFragment)
             R.id.item_ownvpn -> {
                 TODO("replace @id/frag with New VPN fragment")
             }
@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         findViewById<NavigationView>(R.id.nav_view).let {
             it.setNavigationItemSelectedListener(this)
             it.getHeaderView(0).setOnClickListener {
-                replaceFragment(R.string.main, ::MainFragment)
+                replaceFragment(MainFragment)
             }
         }
 
