@@ -2,6 +2,7 @@ package com.beervpn.beervpnandro
 
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
@@ -12,15 +13,29 @@ import android.view.MenuItem
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var drawerLayout: DrawerLayout
 
+    fun replaceFragment(f: Fragment, tagId: Int) {
+        val tag = getString(tagId)
+        drawerLayout.closeDrawers()
+        if(supportFragmentManager.findFragmentByTag(tag)?.isVisible != true)
+            supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(
+                            android.R.animator.fade_in,
+                            android.R.animator.fade_out,
+                            android.R.animator.fade_in,
+                            android.R.animator.fade_out
+                    )
+                    .replace(R.id.frag, f, tag)
+                    .addToBackStack(tag)
+                    .commit()
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.item_about -> {
                 TODO("replace @id/frag with About fragment")
             }
             R.id.item_feedback ->
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.frag, FeedbackFragment())
-                        .commit()
+                replaceFragment(FeedbackFragment(), R.string.feedback)
             R.id.item_ownvpn -> {
                 TODO("replace @id/frag with New VPN fragment")
             }
