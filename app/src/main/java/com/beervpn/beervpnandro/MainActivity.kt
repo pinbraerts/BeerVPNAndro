@@ -49,7 +49,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 TODO("replace @id/frag with Report fragment")
             }
         }
-        drawerLayout.closeDrawers()
         return true
     }
 
