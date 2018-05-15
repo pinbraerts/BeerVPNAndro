@@ -70,10 +70,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
 
         drawerLayout = findViewById(R.id.nav_drawer)
-        val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,
-                R.string.nav_drawer_open, R.string.nav_drawer_close)
-        drawerLayout.addDrawerListener(toggle)
-        toggle.syncState()
+        ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.nav_drawer_open, R.string.nav_drawer_close).let {
+            drawerLayout.addDrawerListener(it)
+            it.syncState()
+        }
 
         findViewById<NavigationView>(R.id.nav_view).let {
             it.setNavigationItemSelectedListener(this)
