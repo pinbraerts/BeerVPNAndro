@@ -13,7 +13,7 @@ import android.view.MenuItem
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var drawerLayout: DrawerLayout
 
-    fun replaceFragment(f: Fragment, tagId: Int) {
+    inline fun replaceFragment(tagId: Int, fragmentFactory: () -> Fragment) {
         val tag = getString(tagId)
         drawerLayout.closeDrawers()
         if(supportFragmentManager.findFragmentByTag(tag)?.isVisible != true)
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             android.R.animator.fade_in,
                             android.R.animator.fade_out
                     )
-                    .replace(R.id.frag, f, tag)
+                    .replace(R.id.frag, fragmentFactory(), tag)
                     .addToBackStack(tag)
                     .commit()
     }
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 TODO("replace @id/frag with About fragment")
             }
             R.id.item_feedback ->
-                replaceFragment(FeedbackFragment(), R.string.feedback)
+                replaceFragment(R.string.feedback, ::FeedbackFragment)
             R.id.item_ownvpn -> {
                 TODO("replace @id/frag with New VPN fragment")
             }
@@ -75,10 +75,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        findViewById<NavigationView>(R.id.nav_view).setNavigationItemSelectedListener(this)
+        findViewById<NavigationView>(R.id.nav_view).let {
+            it.setNavigationItemSelectedListener(this)
+            it.getHeaderView(0).setOnClickListener {
+                replaceFragment(R.string.main, ::MainFragment)
+            }
+        }
 
         supportFragmentManager.beginTransaction()
                 .replace(R.id.frag, MainFragment())
-                .commitNow()
+                .commit()
     }
 }

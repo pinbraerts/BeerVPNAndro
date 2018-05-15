@@ -86,7 +86,8 @@ class MainFragment : android.support.v4.app.Fragment() {
 
             findViewById<Button>(R.id.btn_feedback).setOnClickListener {
                 (context as MainActivity).replaceFragment(
-                        FeedbackFragment(), R.string.feedback
+                        R.string.feedback,
+                        ::FeedbackFragment
                 )
             }
         }
