@@ -12,21 +12,21 @@ import android.view.MenuItem
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var drawerLayout: DrawerLayout
 
-    fun replaceFragment(comp: BeerCompanion) {
+    fun replaceFragment(comp: BeerCompanion): Boolean {
         drawerLayout.closeDrawers()
-        supportFragmentManager.apply {
-            if (findFragmentByTag(comp.tag)?.isVisible != true)
-                beginTransaction()
-                        .setCustomAnimations(
-                                android.R.animator.fade_in,
-                                android.R.animator.fade_out,
-                                android.R.animator.fade_in,
-                                android.R.animator.fade_out
-                        )
-                        .replace(R.id.frag, comp.instance, comp.tag)
-                        .addToBackStack(comp.tag)
-                        .commit()
+        return supportFragmentManager.fragments[0].tag == comp.tag || false.apply {
+            supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(
+                            android.R.animator.fade_in,
+                            android.R.animator.fade_out
+                    )
+                    .replace(R.id.frag, comp.instance, comp.tag)
+                    .commit()
         }
+    }
+
+    override fun onBackPressed() {
+        if(replaceFragment(MainFragment)) super.onBackPressed()
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
