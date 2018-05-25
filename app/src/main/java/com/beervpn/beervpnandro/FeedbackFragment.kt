@@ -11,7 +11,9 @@ import android.widget.Button
 import android.widget.SeekBar
 import android.widget.TextView
 
-class FeedbackFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
+class FeedbackFragment : Fragment(), BeerFragment, SeekBar.OnSeekBarChangeListener {
+    override fun getNum() = FeedbackFragment.num
+
     companion object: BeerCompanion(1, "BEER", ::FeedbackFragment)
 
     lateinit var summaryText: TextView

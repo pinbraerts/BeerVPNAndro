@@ -14,15 +14,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     fun replaceFragment(comp: BeerCompanion): Boolean {
         drawerLayout.closeDrawers()
-        return supportFragmentManager.fragments[0].tag == comp.tag || false.apply {
-            supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(
-                            android.R.animator.fade_in,
-                            android.R.animator.fade_out
-                    )
-                    .replace(R.id.frag, comp.instance, comp.tag)
-                    .commit()
+        val num = (supportFragmentManager.fragments[0] as BeerFragment).getNum()
+        if(num == comp.num) return true
+        supportFragmentManager.beginTransaction().apply {
+            if(comp.num > num)
+                setCustomAnimations(
+                    R.anim.enter_top,
+                    R.anim.exit_bottom
+                )
+            else
+                setCustomAnimations(
+                    R.anim.enter_bottom,
+                    R.anim.exit_top
+                )
         }
+                .replace(R.id.frag, comp.instance, comp.tag)
+                .commit()
+        return false
     }
 
     override fun onBackPressed() {

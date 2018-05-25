@@ -9,7 +9,9 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 
-class MainFragment: Fragment() {
+class MainFragment: Fragment(), BeerFragment {
+    override fun getNum() = MainFragment.num
+
     companion object : BeerCompanion(0, "MAIN", ::MainFragment)
 
     enum class State {
