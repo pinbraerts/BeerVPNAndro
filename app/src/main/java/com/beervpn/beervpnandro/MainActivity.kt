@@ -1,95 +1,116 @@
 package com.beervpn.beervpnandro
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.support.design.widget.NavigationView
+import android.support.v4.view.GravityCompat
+import android.support.v4.widget.DrawerLayout
+import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.SwitchCompat
+import android.support.v7.widget.Toolbar
+import android.view.MenuItem
+import android.view.ViewGroup
+import android.widget.CompoundButton
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
-    enum class State {
-        Connected,
-        Connecting,
-        Disconnected
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    lateinit var drawerLayout: DrawerLayout
+
+    fun replaceFragment(comp: BeerCompanion): Boolean {
+        drawerLayout.closeDrawers()
+        val num = (supportFragmentManager.fragments[0] as BeerFragment).getNum()
+        if(num == comp.num) return true
+        supportFragmentManager.beginTransaction().apply {
+            if(comp.num > num)
+                setCustomAnimations(
+                    R.anim.enter_top,
+                    R.anim.exit_bottom
+                )
+            else
+                setCustomAnimations(
+                    R.anim.enter_bottom,
+                    R.anim.exit_top
+                )
+        }
+                .replace(R.id.frag, comp.instance, comp.tag)
+                .commit()
+        return false
     }
 
-    private var state = State.Disconnected
-        set(s) {
-            if(field == s) return
-            field = s
-            when(field) {
-                MainActivity.State.Connected -> {
-                    txt.setText(R.string.connected)
-                    btn.setText(R.string.disconnect)
-                    prb.visibility = View.GONE
-                }
-                MainActivity.State.Connecting -> {
-                    txt.setText(R.string.connecting)
-                    btn.setText(R.string.disconnect)
-                    prb.visibility = View.VISIBLE
-                }
-                MainActivity.State.Disconnected -> {
-                    txt.setText(R.string.disconnected)
-                    btn.setText(R.string.connect)
-                    prb.visibility = View.GONE
-                }
+    override fun onBackPressed() {
+        if(replaceFragment(MainFragment)) super.onBackPressed()
+    }
+
+    fun toggleSwitch(v: CompoundButton, checked: Boolean) {
+        TODO("toggle ads")
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.item_feedback ->
+                replaceFragment(FeedbackFragment)
+            R.id.item_settings -> {
+                TODO("replaceFragment(SettingsFragment)")
+            }
+            R.id.item_ads ->
+                item.getSwitch().toggle()
+            R.id.item_about -> {
+                TODO("replaceFragment(AboutFragment)")
+            }
+            R.id.item_ownvpn -> {
+                TODO("replaceFragment(NewVPNFragment)")
+            }
+            R.id.item_faq -> {
+                TODO("replaceFragment(FAQFragment)")
+            }
+            R.id.item_privacy -> {
+                TODO("replaceFragment(PrivacyInfoFragment)")
+            }
+            R.id.item_report -> {
+                TODO("replaceFragment(ReportFragment)")
             }
         }
-
-    private lateinit var btn: Button
-    private lateinit var txt: TextView
-    private lateinit var prb: ProgressBar
-    private val connectThreadRunnable = Runnable {
-        try {
-            Thread.sleep(1000)
-            finishConnecting()
-        } catch (e: InterruptedException) {}
+        return true
     }
-    private var connectThread = Thread(connectThreadRunnable)
 
-    override fun onClick(v: View) {
-        state = when(state) {
-            State.Connected, State.Connecting -> {
-                disconnect()
-                State.Disconnected
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                drawerLayout.openDrawer(GravityCompat.START)
+                true
             }
-            State.Disconnected -> {
-                startConnecting()
-                State.Connecting
-            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun startConnecting() {
-        connectThread = Thread(connectThreadRunnable)
-        connectThread.start()
-        TODO("start VPN service and call finishConnecting when connected")
-    }
-    public fun finishConnecting() {
-        runOnUiThread {
-            state = State.Connected
-            Toast.makeText(this, "connected!", Toast.LENGTH_SHORT).show()
-        }
-        TODO()
-    }
-    private fun disconnect() {
-        runOnUiThread {
-            Toast.makeText(this, "disconnected!", Toast.LENGTH_SHORT).show()
-        }
-        connectThread.interrupt()
-        TODO("stop service if running")
+    fun MenuItem.getSwitch(): SwitchCompat {
+        return (actionView as ViewGroup).getChildAt(0) as SwitchCompat
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btn = findViewById(R.id.btn_connect)
-        btn.setOnClickListener(this)
+        val toolbar = findViewById<Toolbar>(R.id.nav_toolbar)
+        setSupportActionBar(toolbar)
 
-        txt = findViewById(R.id.lbl_connection)
-        prb = findViewById(R.id.prb_connection)
+        drawerLayout = findViewById(R.id.nav_drawer)
+        ActionBarDrawerToggle(this, drawerLayout, toolbar,
+                R.string.nav_drawer_open, R.string.nav_drawer_close).let {
+            drawerLayout.addDrawerListener(it)
+            it.syncState()
+        }
+
+        findViewById<NavigationView>(R.id.nav_view).let {
+            it.setNavigationItemSelectedListener(this)
+            it.getHeaderView(0).setOnClickListener {
+                replaceFragment(MainFragment)
+            }
+            it.menu.findItem(R.id.item_ads).getSwitch()
+                .setOnCheckedChangeListener(::toggleSwitch)
+        }
+
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.frag, MainFragment())
+                .commit()
     }
 }
