@@ -6,8 +6,11 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.SwitchCompat
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
+import android.view.ViewGroup
+import android.widget.CompoundButton
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     lateinit var drawerLayout: DrawerLayout
@@ -37,24 +40,33 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if(replaceFragment(MainFragment)) super.onBackPressed()
     }
 
+    fun toggleSwitch(v: CompoundButton, checked: Boolean) {
+        TODO("toggle ads")
+    }
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.item_about -> {
-                TODO("replace @id/frag with About fragment")
-            }
             R.id.item_feedback ->
                 replaceFragment(FeedbackFragment)
+            R.id.item_settings -> {
+                TODO("replaceFragment(SettingsFragment)")
+            }
+            R.id.item_ads ->
+                item.getSwitch().toggle()
+            R.id.item_about -> {
+                TODO("replaceFragment(AboutFragment)")
+            }
             R.id.item_ownvpn -> {
-                TODO("replace @id/frag with New VPN fragment")
+                TODO("replaceFragment(NewVPNFragment)")
             }
             R.id.item_faq -> {
-                TODO("replace @id/frag with FAQ fragment")
+                TODO("replaceFragment(FAQFragment)")
             }
             R.id.item_privacy -> {
-                TODO("replace @id/frag with Privacy Policy fragment")
+                TODO("replaceFragment(PrivacyInfoFragment)")
             }
             R.id.item_report -> {
-                TODO("replace @id/frag with Report fragment")
+                TODO("replaceFragment(ReportFragment)")
             }
         }
         return true
@@ -68,6 +80,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    fun MenuItem.getSwitch(): SwitchCompat {
+        return (actionView as ViewGroup).getChildAt(0) as SwitchCompat
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,6 +105,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             it.getHeaderView(0).setOnClickListener {
                 replaceFragment(MainFragment)
             }
+            it.menu.findItem(R.id.item_ads).getSwitch()
+                .setOnCheckedChangeListener(::toggleSwitch)
         }
 
         supportFragmentManager.beginTransaction()

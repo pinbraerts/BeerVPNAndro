@@ -10,4 +10,6 @@
     <string name="beer_for_beervpn">Пиво для BeerVPN</string>
     <string name="beer_for_the_admin">Пиво для Админа</string>
     <string name="buy">Купить!</string>
+    <string name="settings">Настройки</string>
+    <string name="remove_ads">Баннерорезка</string>
 </resources>
