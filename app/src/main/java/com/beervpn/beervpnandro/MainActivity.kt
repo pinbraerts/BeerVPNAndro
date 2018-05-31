@@ -20,16 +20,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val num = (supportFragmentManager.fragments[0] as BeerFragment).getNum()
         if(num == comp.num) return true
         supportFragmentManager.beginTransaction().apply {
-            if(comp.num > num)
-                setCustomAnimations(
-                    R.anim.enter_top,
-                    R.anim.exit_bottom
-                )
-            else
-                setCustomAnimations(
-                    R.anim.enter_bottom,
-                    R.anim.exit_top
-                )
+            if(comp.num == 0) setCustomAnimations(R.anim.enter_left, R.anim.exit_right)
+            else if(num == 0) setCustomAnimations(R.anim.enter_right, R.anim.exit_left)
+            else if(num < comp.num) setCustomAnimations(R.anim.enter_top, R.anim.exit_bottom)
+            else setCustomAnimations(R.anim.enter_bottom, R.anim.exit_top)
         }
                 .replace(R.id.frag, comp.instance, comp.tag)
                 .commit()
