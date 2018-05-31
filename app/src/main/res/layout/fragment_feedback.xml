@@ -6,17 +6,31 @@
     android:orientation="vertical"
     tools:context=".FeedbackFragment">
 
-    <TextView
+    <ImageView
+        android:id="@+id/image_beer"
+        android:contentDescription="@string/beer_pint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/small_padding"
-        android:drawableLeft="@drawable/beer_pint"
+        android:layout_margin="@dimen/small_margin"
+        android:layout_toStartOf="@id/_space_center"
+        android:src="@drawable/beer_pint"
+        android:layout_toLeftOf="@id/_space_center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/image_beer"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="@dimen/small_margin"
+        android:layout_marginRight="@dimen/small_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:layout_toEndOf="@id/_space_center"
+        android:layout_toRightOf="@id/_space_center"
         android:gravity="center_vertical|start"
         android:text="@string/pint_cost"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-        android:drawableStart="@drawable/beer_pint" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
     <LinearLayout
         android:id="@+id/_lay_beervpn"
@@ -92,7 +106,7 @@
     <Space
         android:id="@+id/_space_center"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
@@ -107,5 +121,4 @@
         android:layout_toEndOf="@+id/_space_center"
         android:layout_toRightOf="@+id/_space_center"
         android:text="@string/buy" />
-
 </RelativeLayout>
