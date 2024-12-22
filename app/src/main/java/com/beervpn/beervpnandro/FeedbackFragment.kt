@@ -45,9 +45,7 @@ class FeedbackFragment : Fragment(), BeerFragment, SeekBar.OnSeekBarChangeListen
     }
 
     fun getDrawableOver(id: Int): Drawable {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-            context!!.getDrawable(id)
-        else resources.getDrawable(id)
+        return context!!.getDrawable(id)!!
     }
 
     override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -69,8 +67,10 @@ class FeedbackFragment : Fragment(), BeerFragment, SeekBar.OnSeekBarChangeListen
             summaryText = it.findViewById(R.id.text_summary)
             buttonBuy = it.findViewById(R.id.btn_buy)
 
-            summary = arrayOf<SeekBar>(it.findViewById(R.id.seek_bvpn),
-                    it.findViewById(R.id.seek_admin)).sumBy { sb ->
+            summary = arrayOf<SeekBar>(
+                it.findViewById(R.id.seek_bvpn),
+                it.findViewById(R.id.seek_admin)
+            ).sumOf { sb ->
                 sb.setOnSeekBarChangeListener(this)
                 sb.setPreviousProgress()
                 sb.progress

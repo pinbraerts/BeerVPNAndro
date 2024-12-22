@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return false
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if(replaceFragment(MainFragment)) super.onBackPressed()
     }
